@@ -51,13 +51,13 @@ export class RegisteredTimeService {
   async findOne(id: number) {
     
     const allRegisters = await this.registeredTimeRepository.find({
-      where: {
-        id
-      },
       relations: ['user']
     });
+    
+    const filterRegisterByUser = allRegisters.filter(register => register.user.id === id);
+    
 
-    const registersFormatted = allRegisters.map(register => {
+    const registersFormatted = filterRegisterByUser.map(register => {
       return {
         ...register,
         timeRegistered: format(new Date(register.timeRegistered), "dd/MM/yy", {
@@ -65,10 +65,10 @@ export class RegisteredTimeService {
         }),
         hour: format(new Date(register.timeRegistered), "kk:mm'h'", {
           locale: ptBR,
-
         })
       }
     })
+
     
     return registersFormatted
 
