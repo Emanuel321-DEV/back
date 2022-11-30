@@ -4,7 +4,7 @@ import { CreateRegisteredTimeDto } from './dto/create-registered_time.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('registered-time')
-//@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class RegisteredTimeController {
   constructor(private readonly registeredTimeService: RegisteredTimeService) {}
 
